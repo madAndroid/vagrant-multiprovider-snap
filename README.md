@@ -9,6 +9,8 @@ running Vagrant boxes.  It currently supports the following providers:
 
  * VirtualBox
  * VMWare Fusion (via the commercial VMWare plugin)
+ * VMWare Workstation (via the commercial VMWare plugin)
+ * Hyper-V
 
 
 Installation
@@ -24,27 +26,38 @@ vagrant plugin install vagrant-multiprovider-snap
 Usage
 -----
 
-Typical usage:
+Take a new snapshot:
 
-  * Take a new snapshot
-    ```vagrant snap take [vm]```
+    vagrant snap take [vm]
 
-  * Roll back to the last snapshot
-    ```vagrant snap rollback [vm]```
+Roll back to the last snapshot:
 
-  * List snapshots
-    ```vagrant snap list [vm]```
+    vagrant snap rollback [vm]
+
+List snapshots:
+
+    vagrant snap list [vm]
+
+Take a custom-named snapshot:
+
+    vagrant snap take [vm] --name=snap01
+
+Roll back to a named snapshot:
+
+    vagrant snap rollback [vm] --name=snap01
+
+Delete a snapshot
+
+    vagrant snap delete [vm] --name=snap01
 
 Limitations
 -----------
 
 It's currently not possible to do any of the following:
 
- * Give a custom snapshot name
- * Roll back to a specific named snapshot
  * Disable snapshotting
 
-My own requirements don't include these features, but I could be tempted to
+My own requirements don't include this feature, but I could be tempted to
 add them if anyone would find them useful.
 
 
@@ -59,9 +72,7 @@ Vagrant install in order to get access to the rgloader libraries.
 ```
 git clone git@github.com:scalefactory/vagrant-multiprovider-snap.git
 cd vagrant-multiprovider-snap
-cp ~/.vagrant.d/license-vagrant-vmware-fusion.lic .
 bundle install
-bundle install --deployment
 ```
 
 You should now find that ```bundle exec vagrant status``` returns correctly,
@@ -81,8 +92,13 @@ vagrant-multiprovider-snap is licensed under the MIT license.
 Thanks
 ------
 
+vagrant-multiprovider-snap was written, and is maintained by Jon Topper of [The Scale Factory](http://www.scalefactory.com/)
+
 Many thanks to the following people for contributing to vagrant-multiprovider-snap:
 
  - Reid Vandewiele
  - James Sweeny
  - Steven De Coeyer
+ - Andrew Stangl
+ - Stefan Scherer
+

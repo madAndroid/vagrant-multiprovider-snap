@@ -1,8 +1,8 @@
 require "vagrant/action/builder"
 
-module VagrantPlugins
+module HashiCorp
 
-    module ProviderVirtualBox
+    module VagrantVMwareworkstation
 
         module Action
 
@@ -11,14 +11,12 @@ module VagrantPlugins
             autoload :SnapshotDelete,            File.expand_path("../action/snapshot_delete.rb", __FILE__)
             autoload :HasSnapshot,               File.expand_path("../action/has_snapshot.rb", __FILE__)
             autoload :MessageSnapshotNotCreated, File.expand_path("../action/message_snapshot_not_created.rb", __FILE__)
-            autoload :MessageSnapshotNotDeleted, File.expand_path("../action/message_snapshot_not_deleted.rb", __FILE__)
 
             def self.action_snapshot_take
                 Vagrant::Action::Builder.new.tap do |b|
-                    b.use CheckVirtualbox
+                    b.use CheckVMware
                     b.use Call, Created do |env, b2|
                         if env[:result]
-                            b2.use CheckAccessible
                             b2.use SnapshotTake
                         else
                             b2.use MessageNotCreated
@@ -29,19 +27,14 @@ module VagrantPlugins
 
             def self.action_snapshot_delete
                 Vagrant::Action::Builder.new.tap do |b|
-                    b.use CheckVirtualbox
+                    b.use CheckVMware
                     b.use Call, Created do |env, b2|
                         if env[:result]
                             b2.use Call, HasSnapshot do |env2, b3|
                                 if env2[:result]
-                                    b3.use CheckAccessible
-                                    b3.use Call, SnapshotDelete do |env3,b4|
-                                        unless env3[:result]
-                                            b4.use MessageSnapshotNotDeleted
-                                        end
-                                    end
+                                    b3.use SnapshotDelete
                                 else
-                                    b3.use MessageSnapshotNotCreated
+                                    b3.use MessageSnapshotNotDeleted
                                 end
                             end
                         else
@@ -53,12 +46,11 @@ module VagrantPlugins
 
             def self.action_snapshot_rollback
                 Vagrant::Action::Builder.new.tap do |b|
-                    b.use CheckVirtualbox
+                    b.use CheckVMware
                     b.use Call, Created do |env, b2|
                         if env[:result]
                             b2.use Call, HasSnapshot do |env2, b3|
                                 if env2[:result]
-                                    b3.use CheckAccessible
                                     b3.use SnapshotRollback
                                     b3.use WaitForCommunicator, [:restoring, :running]
                                 else
@@ -71,7 +63,6 @@ module VagrantPlugins
                     end
                 end
             end
-
        end
 
     end

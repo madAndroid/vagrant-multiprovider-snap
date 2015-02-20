@@ -1,6 +1,6 @@
 module VagrantPlugins
 
-    module ProviderVirtualBox
+    module HyperV
 
         module Action
 
@@ -12,11 +12,11 @@ module VagrantPlugins
 
                 def call(env)
 
-                    if env[:snap_name].nil?
-                        env[:snap_name] = env[:machine].provider.driver.snapshot_list.last
-                    end
-
-                    env[:result] = env[:machine].provider.driver.has_snapshot?(env[:snap_name])
+		    if env[:snap_name].nil?
+                        env[:result] = env[:machine].provider.driver.has_snapshot?
+		    else
+			env[:result] = env[:machine].provider.driver.has_snapshot?(env[:snap_name])
+		    end
 
                     @app.call(env)
 

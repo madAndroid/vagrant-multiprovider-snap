@@ -1,3 +1,32 @@
+## 0.0.14 (October 9, 2014)
+
+ - Fix a bug affecting vagrant-cucumber.
+
+## 0.0.13 (September 28, 2014)
+
+ - Support for Snapshot deletion
+ - Fix bug causing VMWare Fusion VMs to always open GUI on rollback
+ - Support for Hyper-V provider 
+
+## 0.0.12 (August 10, 2014)
+
+ - Support named snapshots and arbitrary rollback
+ - Ensure GUI-enabled VMWare VMs roll back with the GUI active
+
+## 0.0.11 (April 28, 2014)
+
+ - Wait for SSH readiness on rolled-back VMWare VMs
+
+## 0.0.10 (April 6, 2014)
+
+ - Force autoloading of VMWare module before overriding its methods
+ - Ensure our override class has same superclass as the one we're adding methods to
+ - Ensure Virtualbox boxes are ready after snapshot rollback
+
+## 0.0.9 (March 11, 2014)
+
+ - Made plugin compatable with Vagrant 1.5 bundler approach
+
 ## 0.0.8 (January 21, 2014)
 
  - Fixed bug in handling of multiple snapshots on both providers.

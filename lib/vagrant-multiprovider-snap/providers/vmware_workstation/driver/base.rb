@@ -1,10 +1,10 @@
 module HashiCorp
 
-    module VagrantVMwarefusion
+    module VagrantVMwareworkstation
 
         module Driver
 
-            class Fusion
+            class Base
 
                 def snapshot_take(name)
                     vmrun("snapshot", "#{vmx_path}", name || "vagrant-snap-#{Time.now.to_i}")
@@ -29,7 +29,7 @@ module HashiCorp
                     snapshots
                 end
 
-                def has_snapshot?(name=nil)
+                def has_snapshot?(name)
                     if name.nil?
                         return true unless snapshot_list.empty?
                     else

@@ -1,6 +1,6 @@
 module HashiCorp
 
-    module VagrantVMwarefusion
+    module VagrantVMwareworkstation
 
         module Action
 

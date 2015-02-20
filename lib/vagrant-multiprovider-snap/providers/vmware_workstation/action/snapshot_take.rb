@@ -1,10 +1,10 @@
 module HashiCorp
 
-    module VagrantVMwarefusion
+    module VagrantVMwareworkstation
 
         module Action
 
-            class MessageSnapshotNotCreated
+            class SnapshotTake
 
                 def initialize(app, env)
                     @app = app
@@ -13,12 +13,14 @@ module HashiCorp
                 def call(env)
 
                     if env[:snap_name].nil?
-                        env[:ui].info I18n.t("vagrant_snap.actions.vm.snapshot_not_created.not_created")
+                        env[:ui].info I18n.t("vagrant_snap.actions.vm.snapshot_take.taking")
                     else
-                        env[:ui].info(I18n.t("vagrant_snap.actions.vm.snapshot_not_created.named_not_exist",
+                        env[:ui].info(I18n.t("vagrant_snap.actions.vm.snapshot_take.taking_named",
                             :snapshot => env[:snap_name]),
                         )
                     end
+
+                    env[:machine].provider.driver.snapshot_take(env[:snap_name])
 
                     @app.call(env)
 
