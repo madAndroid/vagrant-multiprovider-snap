@@ -9,6 +9,9 @@ module VagrantSnap
         require_relative "providers/virtualbox/driver/base"
         require_relative "providers/virtualbox/driver/meta"
 
+	require_relative "providers/docker/action"
+	require_relative "providers/docker/driver/base"
+
 	require_relative "providers/hyperv/action"
 	require_relative "providers/hyperv/driver/base"
 
